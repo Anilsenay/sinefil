@@ -15,9 +15,9 @@ choice = input("Do you want to see IMDB Top 100 list? (Y/N): ")
 if(choice == 'Y' or choice == 'y'):
 	i = 0
 	rateIndex = 0
-	while (i <= 100):
+	while (i < 100):
 		#print(films[i].a.text, "(IMDB rate: " + rates[rateIndex].strong.text + ")")
-		print('{:71}'.format(films[i].a.text), '{:>10}'.format("(rate:"+rates[rateIndex].strong.text+")"))
+		print((i+1),")",'{:71}'.format(films[i].a.text), '{:>10}'.format("(rate:"+rates[rateIndex].strong.text+")"))
 		i = i + 1
 		rateIndex = rateIndex + 2
 
