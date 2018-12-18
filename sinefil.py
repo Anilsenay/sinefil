@@ -9,10 +9,10 @@ films = soup.find_all("td", attrs = {"class":"titleColumn"})
 rates = soup.find_all("td", attrs = {"class":"ratingColumn"})
 
 random = random.randint(0,99)
-print("We suggest you to watch: " + films[random].a.text + "(" + rates[random*2].strong.text + ")")
+print("We suggest you to watch: " + films[random].a.text + " (rate:" + rates[random*2].strong.text + ")")
 choice = input("Do you want to see IMDB Top 100 list? (Y/N): ")
 
-if(choice == 'Y'):
+if(choice == 'Y' or choice == 'y'):
 	i = 0
 	rateIndex = 0
 	while (i <= 100):
