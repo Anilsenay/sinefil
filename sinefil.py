@@ -113,6 +113,7 @@ elif(choice == "4"):
 	print("A random suggestion from movies I watched this year is " + '\033[0;32m' + films[random].get("alt").upper() + '\033[0m')
 	print("")
 
+#################################### 5- My list #####################################################
 elif(choice == "5"):
 	requestAdress = requests.get("https://letterboxd.com/anilsenay/list/onerilir/")
 	soup = BeautifulSoup(requestAdress.content, "html.parser")
@@ -126,6 +127,11 @@ elif(choice == "5"):
 		print( (str)(index+1) + ") " + films[index].get("alt"))
 		index = index + 1
 	print("\nYou can check my letterbox account for more: " + '\033[0;32m' + "https://letterboxd.com/anilsenay" + '\033[0m')
+
+#################################### 6- Find rate from platforms ####################################
+elif(choice == "6"):
+	print("SORRY! NOT FINISHED YET!")
+
 else:
 	print("Wrong input")
 
