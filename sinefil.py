@@ -130,8 +130,34 @@ elif(choice == "5"):
 
 #################################### 6- Find rate from platforms ####################################
 elif(choice == "6"):
-	print("SORRY! NOT FINISHED YET!")
+	movieName = input("Which movie do you want to search: ")
+	
+	## IMDB ##
+#	requestAdressIMDB = requests.get("https://www.imdb.com/search/title?title="+movieName+"&view=simple")
+#	soup = BeautifulSoup(requestAdressIMDB.content, "html.parser")
+#	
+#	films = soup.find_all("div", attrs = {"class":"col-title"})
+#	imdbRates = soup.find_all("div", attrs = {"class":"col-imdb-rating"})
+#
+#	print(films[0].span.text.replace('\n', "") + " IMDB rate: " + imdbRates[0].strong.text.replace(' ', "").replace('\n', "") )
+
+	    ## IMDB AND METACRITIC ##
+	requestAdressIMDB = requests.get("https://www.imdb.com/search/title?title="+movieName+"&view=advanced")
+	soup = BeautifulSoup(requestAdressIMDB.content, "html.parser")
+    
+	films = soup.find_all("h3", attrs = {"class":"lister-item-header"})
+	imdbRates = soup.find_all("div", attrs = {"class":"ratings-bar"})
+	metacriticRate = soup.find_all("span", attrs = {"class":"metascore favorable"})
+	informations = soup.find_all("p", attrs = {"class":"text-muted"})
+	stars = soup.find_all("div", attrs = {"class":"lister-item-content"})
+	print("________________________________________________\n")
+	print(films[0].text.replace('\n', ""))
+	print("")
+	print(informations[0].text.replace('\n', " ")[1:])
+	print(stars[0].text[stars[0].text.find("Director"): stars[0].text.find("Votes")].replace("\n", '').replace("     ","\n").replace('|', "") )
+	print("________________________________________________")
+	print("\nIMDB rate: " + imdbRates[0].strong.text.replace(' ', "").replace('\n', "") )
+	print("Metacritic rate: " +  metacriticRate[0].text)
 
 else:
 	print("Wrong input")
-
