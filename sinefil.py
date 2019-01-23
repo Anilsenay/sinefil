@@ -9,7 +9,8 @@ print("1- Random suggestion by top rated films \n"	+
 	"4- My random suggestion \n" +
 	"5- My suggestion list \n" +
 	"6- Find a film's rates by platforms \n" +
-	"q- For quit")
+	"7- Advanced search for film rates\n" +
+	"q- For quit \n")
 
 choice = input("Write your choice: ")
 print("")
@@ -159,5 +160,38 @@ elif(choice == "6"):
 	print("\nIMDB rate: " + imdbRates[0].strong.text.replace(' ', "").replace('\n', "") )
 	print("Metacritic rate: " +  metacriticRate[0].text)
 
+################################## 7- Find rate advanced #################################################
+elif(choice == "7"):
+	print("WARNING! Listed data may contain wrong informations.")
+	movieName = input("Which movie do you want to search: ")
+        ## IMDB AND METACRITIC ##
+	requestAdressIMDB = requests.get("https://www.imdb.com/search/title?title="+movieName+"&view=advanced")
+	soup = BeautifulSoup(requestAdressIMDB.content, "html.parser")
+    
+	films = soup.find_all("h3", attrs = {"class":"lister-item-header"})
+	imdbRates = soup.find_all("div", attrs = {"class":"ratings-bar"})
+	metacriticRate = soup.find_all("span", attrs = {"class":"metascore favorable"})
+	informations = soup.find_all("p", attrs = {"class":"text-muted"})
+	stars = soup.find_all("div", attrs = {"class":"lister-item-content"})
+	index = 0
+	print(len(imdbRates))
+	while( index < len(films) and index < 10):
+		print("________________________________________________\n")
+		print(films[index].text.replace('\n', ""))
+		print("")
+		print(informations[index].text.replace('\n', " ")[1:])
+		print(stars[index].text[stars[index].text.find("Director"): stars[index].text.find("Votes")].replace("\n", '').replace("     ","\n").replace('|', "") )
+		print("________________________________________________")
+		if(imdbRates[index].strong == None or len(imdbRates) <= index):
+			print("No imdb rate")
+		else:
+			print("\nIMDB rate: " + imdbRates[index].strong.text.replace(' ', "").replace('\n', "") )
+		if len(metacriticRate) <= index:
+			print("No metacritic rate")
+		else:
+			print("Metacritic rate: " +  metacriticRate[index].text)
+		index = index + 1
+
 else:
 	print("Wrong input")
+
